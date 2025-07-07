@@ -1,8 +1,11 @@
 import pyautogui
+import pygetwindow as gw
+
+
 
 def press_winkey_and_number(number):
     pyautogui.keyDown('winright')
-    pyautogui.press(number)
+    pyautogui.press(f'{number}')
     pyautogui.keyUp('winright')
 
 def activate_Auto_Core():

@@ -13,5 +13,9 @@ def get_timestamp():
     else:
         return f'{hour:02d}:{minute:02d}'
 
+def get_short_datestamp_windows():
+    now = datetime.now()
+    return f'{now.month}-{now.day}-{now.strftime("%y")}'
+
 def print_timestamp():
     print_to_screen(get_timestamp())

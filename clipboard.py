@@ -12,6 +12,10 @@ def paste_from_clipboard():
     pyautogui.press('v')
     pyautogui.keyUp('ctrlleft')
 
+def copy_and_paste_no_linebreak(text):
+    pyperclip.copy(text)
+    paste_from_clipboard()
+
 def print_to_screen(message):
     print(message)
     pyperclip.copy(message + '\n\n')

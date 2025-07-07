@@ -2,12 +2,14 @@ from pynput import keyboard
 import time
 import pyautogui
 import pyperclip
-from clipboard import copy_to_clipboard, paste_from_clipboard
+from clipboard import copy_to_clipboard, paste_from_clipboard, copy_and_paste_no_linebreak
 import random
 from datetime import datetime
 import pygetwindow as gw
 from journal import *
 from clock import print_timestamp
+from link import print_episode_title
+from env import openai_api_key, copy_openai_api_key
 
 function_key_activated = False
 last_key_pressed = None
@@ -46,23 +48,24 @@ def on_press(key):
         function_key_activated = not function_key_activated
         print('function key', 'activated' if function_key_activated else 'deactivated')
     elif vk == 97:  # numpad_1
-        close_program() if function_key_activated else activate_Auto_Core()
+        activate_Auto_Core() if not function_key_activated else close_program()
     elif vk == 98:
-        print('select_choice(Jose)') if function_key_activated else activate_Word()
+        activate_Word() if not function_key_activated else print('select_choice(Jose)')
     elif vk == 99:
-        print('activate_Firefox()') if function_key_activated else close_program()
+        copy_openai_api_key() if not function_key_activated else print('activate_Firefox()')
     elif vk == 100:
-        print('Spotify_prev_song()') if function_key_activated else print_Daniel_choice()
+        print_Daniel_choice(2) if not function_key_activated else print('Spotify_prev_song()')
     elif vk == 101:
-        print('play_pause_Spotify()') if function_key_activated else print('play_pause_iTunes()')
+        print_Daniel_choice(3)  if not function_key_activated else print('play_pause_Spotify()')
     elif vk == 102:
-        print('activate_iTunes()') if function_key_activated else print('next_song()')
+        print_Daniel_choice(4) if not function_key_activated else print('activate_iTunes()')
     elif vk == 103:
-        print('activate_Chrome()') if function_key_activated else print_to_screen('Hi GPT-4, this is DJ. I am studying software engineering.')
+        copy_and_paste_no_linebreak('Hi GPT-4, this is DJ. I am studying software engineering.') if not function_key_activated else print(
+            'activate_Chrome()')
     elif vk == 104:
-        print('print_military_timestamp_with_the_am_pm_timestamp()') if function_key_activated else print('select_choice(Lily)')
-    elif vk == 105:
-        print_Lily_choice() if function_key_activated else print_timestamp()
+        print_episode_title() if not function_key_activated else print_Star_choice()
+    elif vk == 105:  # numpad_9
+        print_timestamp() if not function_key_activated else print_Lily_choice()
 
     # Auto-deactivate the function key after use
     if function_key_activated and (vk != 200 and vk != 96):
